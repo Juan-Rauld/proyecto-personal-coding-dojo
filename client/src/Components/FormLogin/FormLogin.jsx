@@ -1,15 +1,18 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext from './../../Contexts/UserContext';
 
 
-const LoginForm = () => {
+
+const LoginForm = () => { // Elimina setUser de las props
+  const { setUser } = useContext(UserContext); // Obtiene setUser del contexto
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
-
   const handleChange = (event) => {
     setForm({
       ...form,
@@ -33,6 +36,7 @@ const LoginForm = () => {
     })
     if (response.status === 200) {
       const data = await response.json();
+      setUser(data.user); // Aquí es donde actualizas el estado del usuario
       console.log(data);
       const token = data.token;
       localStorage.setItem('token', token)

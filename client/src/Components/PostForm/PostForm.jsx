@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const PostForm = () => {
 
+    const [user, setUser] = useState({}); // Inicializa el estado del usuario
+
     const [form, setForm] = useState({
         content: '',
     });
@@ -31,21 +33,20 @@ const PostForm = () => {
         } else {
             console.log(payload)
             console.log(form.content)
-
+            console.log(user)
             alert('Nope');
         }
     }
 
-    /*         router.post('/posts', authenticateToken, createPost);
-     */
+    /* router.post('/posts', authenticateToken, createPost); */
 
     const handleChange = (event) => {
         setForm({
-          ...form,
-          [event.target.name]: event.target.value,
+            ...form,
+            [event.target.name]: event.target.value,
         });
-      };
-    
+    };
+
 
 
     return (
@@ -57,7 +58,7 @@ const PostForm = () => {
                     placeholder="Postea algo!"
                     type='text'
                     name='content'
-                    
+
                 />
                 <button type="submit">Post</button>
             </form>
