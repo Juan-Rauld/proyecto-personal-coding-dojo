@@ -109,10 +109,17 @@ const createPost = async (req, res) => {
  */
 
 const getAllPosts = async (req, res) => {
-    const users = await User.find({});
-    const posts = users.flatMap(user => user.posts.map(post => ({ like: post.likes, content: post.content, author: user.firstName })));
-    res.json(posts);
+    try {
+        const posts = await Post.find()
+            .populate('author', 'firstName'); // Selecciona solo firstName y lastName
+
+        res.json(posts);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener los posts');
+    }
 };
+
 
 const getPostsByAuthor = async (req, res) => {
     const { userId } = req.params;
