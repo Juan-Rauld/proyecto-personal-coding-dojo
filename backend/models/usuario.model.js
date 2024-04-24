@@ -2,8 +2,21 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const postSchema = new mongoose.Schema({
-  content: String,
-  likes: { type: Number, default: 0 },
+  content: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+}, {
+  timestamps: true,
 });
 
 const userSchema = new mongoose.Schema({
@@ -64,5 +77,6 @@ userSchema.pre('save', function (next) {
 });
 
 const User = mongoose.model('User', userSchema);
+const Post = mongoose.model('Post', postSchema);
 
-export default User;
+export { User, Post };
