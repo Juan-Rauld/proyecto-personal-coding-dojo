@@ -51,14 +51,6 @@ const RegisterForm = () => {
         console.error('¡Ups! Algo salió mal ' + error);
       }
     }
-    /* .then(response => {
-      if (response.msg === "success!") {
-        alert('Usuario registrado exitosamente');
-        navigate('/login');
-      } else {
-        alert('Error al registrar usuario');
-      }
-    } */
   }
 
   return (
