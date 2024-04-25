@@ -19,16 +19,15 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
-router.post('/register', register);
-router.post('/login', login);
-router.post('/posts', authenticateToken, createPost);
-router.get('/posts', authenticateToken, getAllPosts);
-router.get('/users/:userId/posts', authenticateToken, getPostsByAuthor);
-router.delete('/users/:userId', authenticateToken, deleteUser);
-router.get('/users/:id', authenticateToken, getUserById);
-router.post('/posts/:postId/like', authenticateToken, likePost);
-router.delete('/posts/:postId/unlike', authenticateToken, unlikePost);
-
+router.post('/api/register', register);
+router.post('/api/login', login);
+router.post('/api/posts', authenticateToken, createPost);
+router.get('/api/posts', authenticateToken, getAllPosts);
+router.get('/api/users/:userId/posts', authenticateToken, getPostsByAuthor);
+router.delete('/api/users/:userId', authenticateToken, deleteUser);
+router.get('/api/users/:id', authenticateToken, getUserById);
+router.post('/api/posts/:postId/like', authenticateToken, likePost);
+router.delete('/api/posts/:postId/unlike', authenticateToken, unlikePost);
 
 export default router;
 
