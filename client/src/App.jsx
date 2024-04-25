@@ -22,7 +22,7 @@ function App() {
             <Route path="/login" element={<LoginPage setUser={setUser}></LoginPage>}></Route>
             <Route path="/" element={<HomePage></HomePage>}></Route>
             <Route path='/like_status' element={<LikeStatus></LikeStatus>}></Route>
-            <Route path='/user_profile' element={<UserProfile></UserProfile>}></Route>
+            <Route path='/user_profile/:id' element={<UserProfile></UserProfile>}></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>
         </BrowserRouter>

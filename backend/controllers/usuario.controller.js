@@ -63,24 +63,19 @@ const createPost = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(400).json({ message: 'Invalid user ID' });
     }
-
-
     try {
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
         const newPost = new Post({
             content: content,
             author: userId,  // Asegúrate de que esto es un ObjectId válido
             likes: []        // Inicializa likes como un array vacío
         });
-
         await newPost.save();
         user.posts.push(newPost);
         await user.save();
-
         res.status(201).json({ message: 'Post created successfully', post: newPost });
     } catch (err) {
         console.error(err);
@@ -131,4 +126,71 @@ const getPostsByAuthor = async (req, res) => {
     }
 };
 
-export { register, deleteUser, createPost, getAllPosts, getPostsByAuthor, login };
+
+const getUserById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findById(id).populate('posts');
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const likePost = async (req, res) => {
+    const { postId } = req.params;
+    const userId = req.userId; // Este debe ser un ObjectId válido obtenido del JWT
+
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Comprueba si el usuario ya ha dado "like" al post
+        if (post.likes.map(id => id.toString()).includes(userId)) {
+            return res.status(400).json({ message: 'User has already liked this post' });
+        }
+        post.likes.push(userId);
+        await post.save();
+
+        res.json({ message: 'Post liked successfully', post: post });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error', error: err });
+    }
+};
+
+
+const unlikePost = async (req, res) => {
+    const { postId } = req.params;
+    const userId = req.userId; // Este debe ser un ObjectId válido obtenido del JWT
+
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Comprueba si el usuario ya ha dado "like" al post
+        const index = post.likes.indexOf(userId);
+        if (index === -1) {
+            return res.status(400).json({ message: 'User has not liked this post' });
+        }
+
+        post.likes.splice(index, 1);
+        await post.save();
+
+        res.json({ message: 'Like removed successfully', post: post });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error', error: err });
+    }
+};
+
+export { register, deleteUser, createPost, getAllPosts, getPostsByAuthor, login, getUserById, likePost, unlikePost };

@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, deleteUser, createPost, getAllPosts, getPostsByAuthor, login } from '../controllers/usuario.controller.js';
+import { register, deleteUser, createPost, getAllPosts, getPostsByAuthor, login, getUserById, likePost, unlikePost } from '../controllers/usuario.controller.js';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
@@ -25,6 +25,10 @@ router.post('/posts', authenticateToken, createPost);
 router.get('/posts', authenticateToken, getAllPosts);
 router.get('/users/:userId/posts', authenticateToken, getPostsByAuthor);
 router.delete('/users/:userId', authenticateToken, deleteUser);
+router.get('/users/:id', authenticateToken, getUserById);
+router.post('/posts/:postId/like', authenticateToken, likePost);
+router.delete('/posts/:postId/unlike', authenticateToken, unlikePost);
+
 
 export default router;
 

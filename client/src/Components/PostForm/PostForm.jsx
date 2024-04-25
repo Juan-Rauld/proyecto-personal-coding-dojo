@@ -58,7 +58,6 @@ const PostForm = () => {
                     placeholder="Postea algo!"
                     type='text'
                     name='content'
-
                 />
                 <button type="submit">Post</button>
             </form>
