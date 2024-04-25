@@ -19,7 +19,7 @@ const likePost = (postId, event) => {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('token')
   }
-  fetch(`http://localhost:8080/posts/${postId}/like`, { method: 'POST', headers: headers })
+  fetch(`http://ec2-18-119-162-193.us-east-2.compute.amazonaws.com:8080/posts/${postId}/like`, { method: 'POST', headers: headers })
     .then(response => response.json())
     .then(data => {
       // Verifica que la respuesta de la API tenga la estructura esperada
@@ -37,7 +37,7 @@ const likePost = (postId, event) => {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
-    fetch('http://localhost:8080/posts', { headers: headers }) // fetch by default makes a GET request y header:loquequiera :)
+    fetch('http://ec2-18-119-162-193.us-east-2.compute.amazonaws.com:8080/posts', { headers: headers }) // fetch by default makes a GET request y header:loquequiera :)
       .then(response => response.json())
       .then(data => setPosts(data))
       .catch(err => console.error(err));

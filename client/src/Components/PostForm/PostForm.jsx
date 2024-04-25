@@ -19,7 +19,7 @@ const PostForm = () => {
             content: form.content,
         }
 
-        const response = await fetch('http://localhost:8080/posts', {
+        const response = await fetch('http://ec2-18-119-162-193.us-east-2.compute.amazonaws.com:8080/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -20,3 +20,7 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
+
+
+ec2-18-119-162-193.us-east-2.compute.amazonaws.com
+ssh -i "keyname.pem" ubuntu@ec2-XXX-XXX-XXX-XXX.compute-1.amazonaws.com
