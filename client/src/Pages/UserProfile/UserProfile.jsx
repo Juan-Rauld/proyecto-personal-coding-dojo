@@ -57,7 +57,7 @@ const UserProfile = () => {
         <div key={index} className='card-shadow rounded-2xl p-5 border gap-5'>
           <p>{post.content}</p>
           {post.author === id && (  // Comprobar que el usuario es el autor del post
-            <button onClick={() => deletePost(post._id)}>Delete</button>
+            <button onClick={() => deletePost(post._id)}>Eliminar</button>
           )}
         </div>
       ))}
