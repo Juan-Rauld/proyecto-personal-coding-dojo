@@ -27,7 +27,7 @@ const LoginForm = () => { // Elimina setUser de las props
       email: form.email,
       password: form.password
     }
-    const response = await fetch('http://localhost:8080/api/login', {
+    const response = await fetch('http://ec2-18-191-114-127.us-east-2.compute.amazonaws.com:8080/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

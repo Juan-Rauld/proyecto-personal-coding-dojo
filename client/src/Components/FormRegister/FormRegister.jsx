@@ -36,7 +36,7 @@ const RegisterForm = () => {
         confirmPassword: form.confirmPassword
       }
       try {
-        const response = await fetch('http://localhost:8080/api/register', {
+        const response = await fetch('http://ec2-18-191-114-127.us-east-2.compute.amazonaws.com:8080/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

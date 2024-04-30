@@ -13,7 +13,7 @@ const HomePage = () => {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     };
-    fetch('http://localhost:8080/api/posts', { headers })
+    fetch('http://ec2-18-191-114-127.us-east-2.compute.amazonaws.com:8080/api/posts', { headers })
       .then(response => response.json())
       .then(data => {
         setPosts(data);
@@ -31,7 +31,7 @@ const HomePage = () => {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     };
-    fetch(`http://localhost:8080/api/posts/${postId}/like`, { method: 'POST', headers })
+    fetch(`http://ec2-18-191-114-127.us-east-2.compute.amazonaws.com:8080/api/posts/${postId}/like`, { method: 'POST', headers })
       .then(response => response.json())
       .then(data => {
         if (data && data.post && data.post.likes) {

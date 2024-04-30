@@ -10,7 +10,7 @@ const UserProfile = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch(`http://localhost:8080/api/users/${id}`, {
+    fetch(`http://ec2-18-191-114-127.us-east-2.compute.amazonaws.com:8080/api/users/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -26,7 +26,7 @@ const UserProfile = () => {
 
   const deletePost = (postId) => {
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:8080/api/posts/${postId}`, {
+    fetch(`http://ec2-18-191-114-127.us-east-2.compute.amazonaws.com:8080/api/posts/${postId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`
