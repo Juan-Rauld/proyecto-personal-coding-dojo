@@ -19,7 +19,3 @@ app.listen(8080);
 mongoose.connect("mongodb+srv://jarauldidiaquez:JhTry2wWSAPfBjjL@cluster0.ojeebql.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log("Conexión lograda. Base de datos: [puerto 8080]"))
     .catch((e) => console.log("Error", e));
-
-
-    /* jarauldidiaquez */
-    /* JhTry2wWSAPfBjjL */

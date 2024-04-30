@@ -27,7 +27,7 @@ const LoginForm = () => { // Elimina setUser de las props
       email: form.email,
       password: form.password
     }
-    const response = await fetch('http://ec2-18-119-162-193.us-east-2.compute.amazonaws.com:8080/api/login', {
+    const response = await fetch('http://localhost:8080/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,8 @@ const LoginForm = () => { // Elimina setUser de las props
     })
     if (response.status === 200) {
       const data = await response.json();
-      setUser(data.user); // Aquí es donde actualizas el estado del usuario
+      setUser(data.user);
+      localStorage.setItem('user', JSON.stringify(data.user)); // Almacena el usuario en localStorage    
       console.log(data);
       const token = data.token;
       localStorage.setItem('token', token)
@@ -67,7 +68,7 @@ const LoginForm = () => { // Elimina setUser de las props
         required
         placeholder="Password"
       />
-      <button type="submit">Login</button>
+      <button className='py-2 text-sm font-medium px-4 rounded-lg ml-auto bg-teal-600 text-[#CBFBF1]' type="submit">Login</button>
     </form>
   );
 };

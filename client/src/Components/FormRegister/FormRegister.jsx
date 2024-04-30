@@ -36,7 +36,7 @@ const RegisterForm = () => {
         confirmPassword: form.confirmPassword
       }
       try {
-        const response = await fetch('http://ec2-18-119-162-193.us-east-2.compute.amazonaws.com:8080/api/register', {
+        const response = await fetch('http://localhost:8080/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const RegisterForm = () => {
         placeholder="Confirm Password"
       />
       {passwordError && <p>{passwordError}</p>}
-      <button type="submit">Register</button>
+      <button className='py-2 text-sm font-medium px-4 rounded-lg ml-auto bg-teal-600 text-[#CBFBF1]' type="submit">Register</button>
     </form>
   );
 };

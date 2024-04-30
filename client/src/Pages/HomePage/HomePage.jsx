@@ -1,57 +1,69 @@
-/* eslint-disable no-unused-vars */
-import React from 'react'
-import { useState, useEffect } from 'react'
-import PostForm from '../../Components/PostForm/PostForm'
-import { Link } from 'react-router-dom'
-import Post from '../../Components/Posts/PostComp' // Importa el componente Post
-
+import { useState, useEffect } from 'react';
+import PostForm from '../../Components/PostForm/PostForm';
+import Post from '../../Components/Posts/PostComp';
+import './HomePage.css';
 
 const HomePage = () => {
-  /*   const [petName, setPetName] = useState(''); */
-
   const [posts, setPosts] = useState([]);
+  const [activeModalPostId, setActiveModalPostId] = useState(null);
 
-
-const likePost = (postId, event) => {
-  event.preventDefault();
-
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  }
-  fetch(`http://ec2-18-119-162-193.us-east-2.compute.amazonaws.com:8080/api/posts/${postId}/like`, { method: 'POST', headers: headers })
-    .then(response => response.json())
-    .then(data => {
-      // Verifica que la respuesta de la API tenga la estructura esperada
-      if (data && data.likes) {
-        // Actualiza solo la propiedad "likes" del post que se acaba de dar "like"
-        setPosts(posts.map(post => post._id === postId ? { ...post, likes: data.likes } : post));
-      } else {
-        console.error('Unexpected API response:', data);
-      }
-    })
-    .catch(err => console.error(err));
-};
-  useEffect(() => {
+  // Función para recargar los posts desde el servidor
+  const fetchPosts = () => {
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
-    }
-    fetch('http://ec2-18-119-162-193.us-east-2.compute.amazonaws.com:8080/api/posts', { headers: headers }) // fetch by default makes a GET request y header:loquequiera :)
+    };
+    fetch('http://localhost:8080/api/posts', { headers })
       .then(response => response.json())
-      .then(data => setPosts(data))
+      .then(data => {
+        setPosts(data);
+      })
       .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchPosts();  // Carga inicial de los posts
   }, []);
 
+  const likePost = (postId, event) => {
+    event.preventDefault();
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    };
+    fetch(`http://localhost:8080/api/posts/${postId}/like`, { method: 'POST', headers })
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.post && data.post.likes) {
+          fetchPosts();  // Actualiza todos los posts después de dar like
+        } else {
+          console.error('Unexpected API response:', data);
+        }
+      }).catch(err => console.error(err));
+  };
+
+  const toggleModal = (postId) => {
+    if (activeModalPostId === postId) {
+      setActiveModalPostId(null);
+    } else {
+      setActiveModalPostId(postId);
+    }
+  };
+
   return (
-    <div>
-      <h1>HomePage</h1>
-      {posts.map((post, index) => (
-        <Post key={index} post={post} onLike={likePost} /> // Usa el componente Post para renderizar cada post
+    <div className='w-full flex flex-col gap-10'>
+      <PostForm onAddPost={fetchPosts} />
+      {posts.map((post) => (
+        <Post
+          key={post._id}
+          post={post}
+          onLike={likePost}
+          toggleModal={toggleModal}
+          isModalOpen={activeModalPostId === post._id}
+        />
       ))}
-      <PostForm />
     </div>
   );
-}
+};
 
 export default HomePage;
